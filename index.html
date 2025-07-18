@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>	
+	<style>
+		#timer {
+			font-size: 50px;
+			font-weight: "bold";
+		}
+	</style>
+</head>
+<body>
+	<h1>
+		Teste
+	</h1>
+	<p>Hello world</p>
+	<p id="timer"></p>
+</body>
+<script>
+	const websocket = new WebSocket('ws://192.168.101.91:9000')
+	const timerEl = document.getElementById('timer');
+
+
+	websocket.addEventListener('message', (event) => {
+		console.log(event.data)
+		timerEl.textContent = event.data;
+	})
+</script>
+</html>
