@@ -4,12 +4,15 @@ import mqtt from 'mqtt';
 import { WebSocket } from 'ws';
 
 
+const host = '192.168.101.91';
+const port = 3000
+
 const client = mqtt.connect(
 	{
 		port: 1883, 
-		host: 's1.apontafacil.com',
-		username: 'xZuJRXQ4Zqhe9C6PefcDRZXuLBeYmZ22FwKpQeww',
-		password: 'xZuJRXQ4Zqhe9C6PefcDRZXuLBeYmZ22FwKpQeww'
+		host: process.env.MQTT_HOST || 'localhost',
+		username: process.env.MQTT_USER,
+		password: process.env.MQTT_PWD
 	}
 )
 class Timer {
@@ -24,7 +27,7 @@ class Timer {
 		this.isRunning = true;
 		this.startTime = 0;
 
-		const socket = new WebSocket('ws://192.168.101.91:9000')
+		const socket = new WebSocket(host + ':9000')
 
 		console.log(this.startTime);
 
@@ -46,7 +49,7 @@ const timer = new Timer();
 
 client.on("connect", () => {
 	console.log('Conectado')
-	client.subscribe('/NX/NXS/+/julio-test/DATA')
+	client.subscribe(process.env.MQTT_CHANNEL)
 })
 
 client.on('subscribe', () => {
@@ -75,8 +78,8 @@ const server = async () => {
 		res.end(data)
 	})
 	
-	server.listen(3000, '192.168.101.91', () => {
-		console.log('Escutando em 192.168.101.91')
+	server.listen(port, host, () => {
+		console.log(`Escutando em ${host}`)
 	})
 }
 

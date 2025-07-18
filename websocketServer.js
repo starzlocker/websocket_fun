@@ -1,6 +1,8 @@
 import { WebSocketServer, WebSocket } from 'ws';
 
-const wss = new WebSocketServer({ host: '192.168.101.91', port: 9000 })
+const host = '192.168.101.91';
+
+const wss = new WebSocketServer({ host: host, port: 9000 })
 
 console.log('Escutando por websockets...')
 
@@ -13,7 +15,6 @@ wss.on('connection', (ws) => {
 			client.send(message.toString())
 		})
 	})
-
 
 	ws.on('close', () => {
 		console.log('Cliente desconectado')
